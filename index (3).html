@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HSN AquaRakshak – Smart Water Storage for Hassan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F8FA;--card:#fff;--ink:#12212B;--mute:#51666F;--blue:#0B3C5D;--aqua:#1CA3C7;--green:#2E9E6B;--line:#D5E3E8;--low:#C0392B;--med:#C98A0B;--hi:#2E9E6B;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1A22;--card:#142630;--ink:#E7F1F5;--mute:#9DB4BE;--blue:#7CC7E6;--line:#27404C}}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 "Source Sans 3",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2.2rem,6vw,4rem)}h2{font-size:1.8rem}h3{font-size:1.15rem}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--aqua);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--blue);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;padding:.6rem 1rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--blue);z-index:10}
+header b{font:700 1.2rem "Bricolage Grotesque",sans-serif;margin-right:auto}
+nav{display:flex;gap:.25rem;overflow-x:auto;max-width:100%}
+nav a{color:#fff;text-decoration:none;padding:.4rem .7rem;border-radius:8px;white-space:nowrap;font-size:.95rem}
+nav a[aria-current=page]{background:rgba(255,255,255,.2)}
+main{max-width:1080px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem;align-items:center;padding:1rem 0 2rem}
+.hero p{max-width:60ch;color:var(--mute)}
+.btns{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.2rem}
+.btn{display:inline-block;border:2px solid var(--blue);background:var(--blue);color:#fff;padding:.65rem 1.1rem;border-radius:10px;font:600 1rem "Source Sans 3",sans-serif;text-decoration:none;cursor:pointer}
+.btn.alt{background:transparent;color:var(--blue)}.btn.g{background:var(--green);border-color:var(--green)}
+.btn:hover{filter:brightness(1.1)}
+.tankart{width:100%;max-width:300px;margin:auto}
+.fillrect{animation:fill 2.5s ease-out both}
+@keyframes fill{from{transform:translateY(100%)}to{transform:none}}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem}
+.stat{font:700 2rem "Bricolage Grotesque",sans-serif;color:var(--blue)}
+.mute{color:var(--mute);font-size:.95rem}
+.badge{display:inline-block;padding:.1rem .6rem;border-radius:99px;color:#fff;font-size:.85rem;font-weight:600}
+.Low{background:var(--low)}.Medium{background:var(--med)}.High{background:var(--hi)}
+.bar{height:14px;background:var(--line);border-radius:99px;overflow:hidden;margin:.4rem 0}
+.bar i{display:block;height:100%;border-radius:99px;transition:width 1s ease}
+.sample{background:#FFF4D6;color:#5A4300;border:1px solid #E8CF7C;padding:.5rem .8rem;border-radius:8px;font-size:.92rem;margin-bottom:1rem}
+.sec{margin-top:2rem}
+label{display:block;font-weight:600;margin:.8rem 0 .2rem}
+input,select,textarea{width:100%;padding:.6rem;border:1px solid var(--line);border-radius:8px;font:inherit;background:var(--card);color:var(--ink)}
+.err{color:var(--low);font-size:.9rem;min-height:1.2em}
+.ok{background:#DDF3E8;color:#14532D;border-radius:10px;padding:1rem;margin-top:1rem}
+.tbl{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:520px}th,td{text-align:left;padding:.5rem;border-bottom:1px solid var(--line)}
+.two{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.chart{display:flex;align-items:flex-end;gap:10px;height:160px;padding-top:8px}
+.chart div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:.75rem}
+.chart span{width:100%;border-radius:6px 6px 0 0;background:var(--aqua);transition:height 1s}
+.empty{text-align:center;color:var(--mute);padding:1.5rem}
+@media(max-width:760px){.hero{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><b>💧 HSN AquaRakshak</b>
+<nav id="nav" aria-label="Main"></nav>
+<label style="margin:0;font-size:.85rem">Role <select id="role" style="width:auto;padding:.2rem"><option>Public</option><option>Operator</option><option>Admin</option></select></label></header>
+<main id="app" tabindex="-1"></main>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const L=["Hassan City","Belur","Sakleshpur","Arsikere","Channarayapatna","Holenarasipura"];
+const seed={threshold:25,tanks:[
+{id:1,name:"Town Overhead Tank A",loc:"Hassan City",cap:50000,lvl:41000},
+{id:2,name:"Community Sump Belur",loc:"Belur",cap:30000,lvl:9000},
+{id:3,name:"Ward 5 Tank",loc:"Sakleshpur",cap:20000,lvl:12500},
+{id:4,name:"School Rain Tank",loc:"Arsikere",cap:10000,lvl:2000},
+{id:5,name:"Village Storage Tank",loc:"Channarayapatna",cap:40000,lvl:31000},
+{id:6,name:"Market Tank",loc:"Holenarasipura",cap:25000,lvl:14000}],
+reports:[{id:1,loc:"Belur",cat:"Water shortage",desc:"No supply for 3 days (sample).",date:"2026-10-25",status:"Open"},
+{id:2,loc:"Hassan City",cat:"Leaking pipeline",desc:"Main road pipe leaking (sample).",date:"2026-10-27",status:"In review"}],
+alerts:[]};
+let S;
+try{S=JSON.parse(localStorage.getItem("aq")||"null")}catch(e){S=null}
+if(!S)S=JSON.parse(JSON.stringify(seed));
+const save=()=>{try{localStorage.setItem("aq",JSON.stringify(S))}catch(e){}};
+const pct=t=>Math.round(t.lvl/t.cap*100);
+const st=p=>p<S.threshold?"Low":p<60?"Medium":"High";
+const col=p=>p<S.threshold?"var(--low)":p<60?"var(--med)":"var(--hi)";
+const role=()=>$("#role").value;
+const pages=[["home","Home"],["dashboard","Dashboard"],["tanks","Tanks"],["rain","Rainwater"],["report","Report issue"],["resources","Hassan resources"],["tips","Tips"],["admin","Admin"]];
+const sampleNote='<div class="sample"><b>Sample data.</b> Figures are demonstration values until real sensors or verified sources are connected.</div>';
+const tankBar=t=>{const p=pct(t);return `<div class="card"><h3>${esc(t.name)}</h3><div class="mute">${esc(t.loc)} · ${t.lvl.toLocaleString()} / ${t.cap.toLocaleString()} L</div><div class="bar" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100"><i style="width:0" data-w="${p}" style2="" ></i></div><span class="badge ${st(p)}">${st(p)}</span> <b>${p}%</b></div>`};
+const views={
+home(){return `<section class="hero"><div><h1>Save Every Drop, Secure Every Future.</h1>
+<p>Hassan district depends on monsoon-fed reservoirs, lakes and community tanks. When supply is uneven, tanks run dry in some towns while others overflow or leak. AquaRakshak helps people track tank levels, spot shortages early, report problems, and capture rainwater before it runs off.</p>
+<div class="btns"><a class="btn" href="#dashboard">View Dashboard</a><a class="btn g" href="#report">Report Water Issue</a><a class="btn alt" href="#rain">Explore Solutions</a></div></div>
+<svg class="tankart" viewBox="0 0 200 260" role="img" aria-label="Water tank filling"><defs><clipPath id="c"><rect x="30" y="40" width="140" height="190" rx="14"/></clipPath></defs>
+<rect x="30" y="40" width="140" height="190" rx="14" fill="none" stroke="#0B3C5D" stroke-width="5"/><g clip-path="url(#c)"><g class="fillrect"><rect x="30" y="90" width="140" height="150" fill="#1CA3C7"/><path d="M30 90q17-14 35 0t35 0 35 0 35 0v10H30z" fill="#1CA3C7"/></g></g>
+<rect x="85" y="20" width="30" height="20" fill="#2E9E6B"/><text x="100" y="170" text-anchor="middle" fill="#fff" font-size="26" font-weight="700">72%</text></svg></section>
+<div class="grid" aria-hidden="true" style="margin-bottom:1rem"><svg viewBox="0 0 200 90" class="card"><path d="M10 70h180V40L150 20v50M10 70V45l40-15v40" fill="#cfe6ee" stroke="#0B3C5D" stroke-width="3"/><path d="M10 70h180v14H10z" fill="#1CA3C7"/><text x="100" y="12" text-anchor="middle" font-size="11" fill="currentColor">Reservoir</text></svg><svg viewBox="0 0 200 90" class="card"><path d="M30 40l40-25 40 25z" fill="#0B3C5D"/><rect x="40" y="40" width="60" height="35" fill="#cfe6ee"/><path d="M120 45v30" stroke="#1CA3C7" stroke-width="6"/><rect x="135" y="45" width="35" height="35" rx="5" fill="#2E9E6B"/><text x="100" y="12" text-anchor="middle" font-size="11" fill="currentColor">Rainwater harvesting</text></svg><svg viewBox="0 0 200 90" class="card"><rect x="70" y="20" width="60" height="60" rx="8" fill="none" stroke="#0B3C5D" stroke-width="3"/><rect x="74" y="50" width="52" height="26" fill="#1CA3C7"/><circle cx="100" cy="34" r="5" fill="#2E9E6B"/><path d="M90 28a14 14 0 0 1 20 0M84 22a22 22 0 0 1 32 0" fill="none" stroke="#2E9E6B" stroke-width="2"/><text x="100" y="88" text-anchor="middle" font-size="11" fill="currentColor">Smart sensor</text></svg></div><div class="grid">${[["Smart monitoring","Register tanks, record levels, and get low-water alerts. Ready for IoT sensors later."],["Rainwater harvesting","Estimate how much a rooftop can collect and learn how to store or recharge it."],["Community reporting","Report shortages, leaks and overflows so they reach the right people."]].map(x=>`<div class="card"><h3>${x[0]}</h3><p class="mute">${x[1]}</p></div>`).join("")}</div>`},
+dashboard(){const f=$("#fl")?.value||"",g=$("#ft")?.value||"";const ts=S.tanks.filter(t=>(!f||t.loc===f)&&(!g||t.id==g));
+const cap=ts.reduce((a,t)=>a+t.cap,0),lv=ts.reduce((a,t)=>a+t.lvl,0);
+const open=S.reports.filter(r=>r.status!=="Resolved").length;
+return `${sampleNote}<h2>Smart Water Dashboard</h2>
+<label for="ft">Filter by tank</label><select id="ft" style="max-width:260px"><option value="">All tanks</option>${S.tanks.map(t=>`<option value="${t.id}" ${t.id==g?"selected":""}>${esc(t.name)}</option>`).join("")}</select><label for="fl">Filter by location</label><select id="fl" style="max-width:260px"><option value="">All locations</option>${L.map(l=>`<option ${l===f?"selected":""}>${l}</option>`).join("")}</select>
+<div class="grid sec"><div class="card"><div class="stat">${ts.length}</div>Registered tanks</div><div class="card"><div class="stat">${(lv/1000).toFixed(1)}k L</div>Water available</div><div class="card"><div class="stat">${(cap/1000).toFixed(0)}k L</div>Storage capacity</div><div class="card"><div class="stat">${open}</div>Open water issues</div></div>
+<div class="sec"><h3>Tank levels</h3>${ts.length?`<div class="grid">${ts.map(tankBar).join("")}</div>`:'<div class="card empty">No tanks match this filter.</div>'}</div>
+<div class="two sec"><div class="card"><h3>Level by tank (%)</h3><div class="chart">${ts.map(t=>`<div><b>${pct(t)}</b><span data-h="${pct(t)}" style="height:0;background:${col(pct(t))}"></span><small>${esc(t.name.split(" ")[0])}</small></div>`).join("")}</div></div>
+<div class="card"><h3>Alerts (threshold ${S.threshold}%)</h3>${S.tanks.filter(t=>pct(t)<S.threshold).map(t=>`<p>⚠️ <b>${esc(t.name)}</b> (${esc(t.loc)}) is at ${pct(t)}%.</p>`).join("")||'<p class="mute">No low-water alerts.</p>'}
+<h3 style="margin-top:1rem">Recent updates</h3>${S.alerts.slice(-4).reverse().map(a=>`<p class="mute">${esc(a)}</p>`).join("")||'<p class="mute">No updates yet. Record a reading on the Tanks page.</p>'}</div></div>`},
+tanks(){const can=role()!=="Public";
+return `${sampleNote}<h2>Water storage monitoring</h2>
+<div class="two"><div class="card"><h3>Register a tank</h3>${can?`<form id="tf" novalidate><label for="n">Tank name</label><input id="n" maxlength="60"><label for="l">Location</label><select id="l">${L.map(l=>`<option>${l}</option>`).join("")}</select><label for="c">Total capacity (litres)</label><input id="c" type="number" min="1"><label for="v">Current level (litres)</label><input id="v" type="number" min="0"><div class="err" id="te" role="alert"></div><button class="btn">Add tank</button></form>`:'<p class="mute">Switch Role to Operator or Admin (top right) to register tanks and update readings. In production this is enforced by login and database rules.</p>'}</div>
+<div class="card"><h3>Alert threshold</h3><p class="mute">Alert when available water falls below this percentage.</p>${can?`<label for="th">Threshold %</label><input id="th" type="number" min="1" max="90" value="${S.threshold}">`:`<b>${S.threshold}%</b>`}
+<h3 style="margin-top:1rem">Sensor-ready</h3><p class="mute">Readings use a single record format (tank, litres, time, source). A sensor can post the same record with source “sensor” later.</p></div></div>
+<div class="card tbl sec"><table><thead><tr><th>Tank</th><th>Location</th><th>Capacity</th><th>Level</th><th>Status</th>${can?"<th>Update (L)</th>":""}</tr></thead><tbody>${S.tanks.map(t=>`<tr><td>${esc(t.name)}</td><td>${esc(t.loc)}</td><td>${t.cap.toLocaleString()}</td><td>${pct(t)}%</td><td><span class="badge ${st(pct(t))}">${st(pct(t))}</span></td>${can?`<td><input type="number" min="0" max="${t.cap}" value="${t.lvl}" data-id="${t.id}" class="rd" aria-label="Level for ${esc(t.name)}" style="width:110px"></td>`:""}</tr>`).join("")}</tbody></table></div>`},
+rain(){return `<h2>Rainwater harvesting</h2><div class="two"><div class="card"><h3>From rooftop to tank</h3>
+<svg viewBox="0 0 320 190" style="width:100%" role="img" aria-label="Rain falls on roof, flows through gutter and filter into a storage tank"><path d="M10 40l70-30 70 30z" fill="#0B3C5D"/><rect x="20" y="40" width="120" height="90" fill="#cfe6ee"/><path d="M150 40v90h12V40z" fill="#51666F"/><rect x="150" y="125" width="40" height="12" fill="#2E9E6B"/><text x="195" y="124" font-size="11" fill="currentColor">filter</text><rect x="220" y="95" width="70" height="80" rx="8" fill="#1CA3C7"/><text x="255" y="140" text-anchor="middle" fill="#fff" font-size="12">Tank</text><path d="M190 131h30" stroke="#1CA3C7" stroke-width="5"/><path d="M60 0v-0M40 20l-6 12M70 16l-6 12M110 20l-6 12" stroke="#1CA3C7" stroke-width="3"/><text x="10" y="160" font-size="11" fill="currentColor">Rain → roof → gutter → filter → tank</text></svg></div>
+<div class="card"><h3>Collection calculator</h3><form id="rf"><label for="ra">Roof area (m²)</label><input id="ra" type="number" min="1" value="100"><label for="rr">Annual rainfall (mm)</label><input id="rr" type="number" min="1" value="1000"><label for="rc">Runoff coefficient (0.1–1)</label><input id="rc" type="number" step="0.05" min="0.1" max="1" value="0.8"><div class="err" id="re" role="alert"></div><button class="btn g">Calculate</button></form><div id="ro" class="ok" hidden></div><p class="mute">Enter your own local rainfall; no rainfall figures are supplied here. Litres = area × rainfall(mm) × coefficient.</p></div></div>
+<div class="grid sec">${[["Rooftop collection","Gutters carry roof runoff through a first-flush filter into a covered tank."],["Storage tanks","Sized to household use so water lasts through dry weeks."],["Recharge pits","Pits filled with gravel and sand let surplus rain soak into groundwater."],["Check dams","Small barriers on streams slow water so it seeps into the ground."],["Lake restoration","Desilting and clearing inlets restores a lake's capacity to hold monsoon flow."]].map(x=>`<div class="card"><h3>${x[0]}</h3><p class="mute">${x[1]}</p></div>`).join("")}</div>`},
+report(){return `<h2>Report a water problem</h2><div class="card" style="max-width:620px"><form id="pf" novalidate><label for="pc">Problem</label><select id="pc"><option>Water shortage</option><option>Leaking pipeline</option><option>Damaged tank</option><option>Overflowing storage</option></select><label for="pl">Location</label><select id="pl">${L.map(l=>`<option>${l}</option>`).join("")}</select><label for="pd">Date</label><input id="pd" type="date"><label for="px">Description</label><textarea id="px" rows="4" maxlength="500"></textarea><label for="pp">Photo (optional, JPG/PNG, max 3 MB)</label><input id="pp" type="file" accept="image/jpeg,image/png"><div class="err" id="pe" role="alert"></div><button class="btn g">Submit report</button></form><div id="po" class="ok" hidden></div><p class="mute">Demo: photos are validated but not uploaded. Production uploads go to a private storage bucket.</p></div>`},
+resources(){return `<h2>Hassan water resources</h2><p class="mute" style="max-width:62ch">Only general, well-known details are shown. Live reservoir levels, rainfall and local statistics are not shown because no verified feed is connected. Maps are left out until verified coordinates are added.</p>
+<div class="grid">${[["Hemavathi reservoir","Built on the Hemavathi river near Gorur, Hassan taluk. Supplies irrigation and drinking water downstream."],["Yagachi reservoir","On the Yagachi river in Belur taluk, serving nearby towns and farmland."],["Vatehole reservoir","Near Sakleshpur, on the Vattehole stream in the Western Ghats foothills."],["Local lakes","Many town and village lakes store monsoon runoff. Add verified names via the admin panel."],["Community storage","Ward tanks, school tanks and village sumps registered in this system."]].map(x=>`<div class="card"><h3>${x[0]}</h3><p class="mute">${x[1]}</p></div>`).join("")}</div>
+<div class="card sec empty">For current reservoir levels, check official sources such as the Karnataka State Natural Disaster Monitoring Centre or the district administration.</div>`},
+tips(){return `<h2>Conserve water</h2><div class="grid">${["Fix dripping taps and leaking pipes: a slow drip wastes many litres a day.","Turn off the tank motor when the tank overflows, or fit a float valve.","Reuse washing water for plants and cleaning floors.","Water gardens early morning or evening to cut evaporation.","Cover tanks and sumps to keep out dirt and mosquitoes.","Share these tips at your ward meeting or school."].map(x=>`<div class="card">${x}</div>`).join("")}</div>`},
+admin(){if(role()!=="Admin")return `<h2>Admin panel</h2><div class="card empty">Admins only. Choose Role: Admin (top right) to preview. Real deployments require Supabase login and role checks.</div>`;
+return `${sampleNote}<h2>Admin panel</h2><h3>Reports</h3><div class="card tbl">${S.reports.length?`<table><thead><tr><th>Date</th><th>Location</th><th>Category</th><th>Description</th><th>Status</th></tr></thead><tbody>${S.reports.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.loc)}</td><td>${esc(r.cat)}</td><td>${esc(r.desc)}</td><td><select class="rs" data-id="${r.id}" aria-label="Status">${["Open","In review","Resolved"].map(s=>`<option ${s===r.status?"selected":""}>${s}</option>`).join("")}</select></td></tr>`).join("")}</tbody></table>`:'<div class="empty">No reports yet.</div>'}</div>
+<h3 class="sec">Tanks</h3><div class="card tbl"><table><tbody>${S.tanks.map(t=>`<tr><td>${esc(t.name)}</td><td>${esc(t.loc)}</td><td><button class="btn alt dt" data-id="${t.id}">Delete</button></td></tr>`).join("")}</tbody></table></div>
+<button class="btn alt sec" id="rst">Reset demo data</button>`}};
+function render(){const h=(location.hash||"#home").slice(1);const k=views[h]?h:"home";
+$("#nav").innerHTML=pages.map(p=>`<a href="#${p[0]}" ${p[0]===k?'aria-current="page"':""}>${p[1]}</a>`).join("");
+$("#app").innerHTML=views[k]();bind(k);
+requestAnimationFrame(()=>{document.querySelectorAll("[data-w]").forEach(e=>{e.style.width=e.dataset.w+"%";e.style.background=col(+e.dataset.w)});document.querySelectorAll("[data-h]").forEach(e=>e.style.height=e.dataset.h+"%")})}
+function bind(k){
+if(k==="dashboard"){$("#fl").onchange=render;$("#ft").onchange=render}
+if(k==="tanks"){const f=$("#tf");if(f)f.onsubmit=e=>{e.preventDefault();const n=$("#n").value.trim(),c=+$("#c").value,v=+$("#v").value;
+if(!n)return $("#te").textContent="Enter a tank name.";if(!(c>0))return $("#te").textContent="Capacity must be above 0.";if(v<0||v>c||$("#v").value==="")return $("#te").textContent="Level must be between 0 and capacity.";
+S.tanks.push({id:Date.now(),name:n,loc:$("#l").value,cap:c,lvl:v});S.alerts.push(`Registered ${n}.`);save();render()};
+const th=$("#th");if(th)th.onchange=()=>{const v=+th.value;if(v>=1&&v<=90){S.threshold=v;save();render()}};
+document.querySelectorAll(".rd").forEach(i=>i.onchange=()=>{const t=S.tanks.find(x=>x.id==i.dataset.id),v=+i.value;if(!(v>=0&&v<=t.cap))return render();
+t.lvl=v;const p=pct(t);S.alerts.push(`${t.name}: ${p}% (${st(p)})${p<S.threshold?" – low-water alert sent (sample)":""}`);save();render()})}
+if(k==="rain")$("#rf").onsubmit=e=>{e.preventDefault();const a=+$("#ra").value,r=+$("#rr").value,c=+$("#rc").value;
+if(!(a>0&&r>0&&c>=.1&&c<=1))return $("#re").textContent="Enter positive area and rainfall, and a coefficient from 0.1 to 1.";$("#re").textContent="";
+const o=$("#ro");o.hidden=false;o.textContent=`About ${Math.round(a*r*c).toLocaleString()} litres can be collected per year.`};
+if(k==="report"){$("#pd").valueAsDate=new Date();$("#pf").onsubmit=e=>{e.preventDefault();const d=$("#px").value.trim(),f=$("#pp").files[0];
+if(d.length<10)return $("#pe").textContent="Describe the problem in at least 10 characters.";
+if(f&&!["image/jpeg","image/png"].includes(f.type))return $("#pe").textContent="Photo must be JPG or PNG.";
+if(f&&f.size>3e6)return $("#pe").textContent="Photo must be under 3 MB.";
+S.reports.push({id:Date.now(),loc:$("#pl").value,cat:$("#pc").value,desc:d,date:$("#pd").value,status:"Open"});save();$("#pe").textContent="";$("#pf").hidden=true;
+const o=$("#po");o.hidden=false;o.textContent="Thank you. Your report was submitted and is now Open for review."}}
+if(k==="admin"&&role()==="Admin"){document.querySelectorAll(".rs").forEach(s=>s.onchange=()=>{S.reports.find(r=>r.id==s.dataset.id).status=s.value;save()});
+document.querySelectorAll(".dt").forEach(b=>b.onclick=()=>{S.tanks=S.tanks.filter(t=>t.id!=b.dataset.id);save();render()});
+$("#rst").onclick=()=>{S=JSON.parse(JSON.stringify(seed));save();render()}}}
+$("#role").onchange=render;addEventListener("hashchange",render);render();
+</script></body></html>
